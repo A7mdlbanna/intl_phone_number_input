@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl_phone_number_input/src/models/country_model.dart';
-import 'package:intl_phone_number_input/src/utils/util.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../models/country_model.dart';
 
 /// [Item]
 class Item extends StatelessWidget {
@@ -11,43 +11,41 @@ class Item extends StatelessWidget {
   final bool withCountryNames;
   final double? leadingPadding;
   final bool trailingSpace;
+  final bool? isHint;
 
   const Item({
     Key? key,
     this.country,
     this.showFlag,
+    this.isHint,
     this.useEmoji,
     this.textStyle,
     this.withCountryNames = false,
-    this.leadingPadding = 12,
+    this.leadingPadding = 15,
     this.trailingSpace = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String dialCode = (country?.dialCode ?? '');
-    if (trailingSpace) {
-      dialCode = dialCode.padRight(5, "   ");
-    }
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          SizedBox(width: leadingPadding),
-          _Flag(
-            country: country,
-            showFlag: showFlag,
-            useEmoji: useEmoji,
-          ),
-          SizedBox(width: 12.0),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        SizedBox(width: leadingPadding),
+        _Flag(
+          country: country,
+          showFlag: showFlag,
+          useEmoji: useEmoji,
+        ),
+        if(isHint != null && !isHint!) ...[
+          SizedBox(width: 10.0.w),
           Text(
-            '$dialCode',
-            textDirection: TextDirection.ltr,
+            dialCode,
             style: textStyle,
           ),
-        ],
-      ),
+        ]
+      ],
     );
   }
 }
@@ -62,22 +60,24 @@ class _Flag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return country != null && showFlag!
-        ? Container(
-            child: useEmoji!
-                ? Text(
-                    Utils.generateFlagEmojiUnicode(country?.alpha2Code ?? ''),
-                    style: Theme.of(context).textTheme.headline5,
-                  )
-                : Image.asset(
-                    country!.flagUri,
-                    width: 32.0,
-                    package: 'intl_phone_number_input',
-                    errorBuilder: (context, error, stackTrace) {
-                      return SizedBox.shrink();
-                    },
-                  ),
-          )
-        : SizedBox.shrink();
+    return country != null && showFlag! ? Container(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4.r),
+          boxShadow: [
+            BoxShadow(color: Colors.grey.shade400, blurRadius: 1, spreadRadius: 1)
+          ]
+      ),
+      child: Image.asset(
+        country!.flagUri,
+        width: 26.w,
+        // height: 18.6.h,
+        package: 'intl_phone_number_input',
+        errorBuilder: (context, error, stackTrace) {
+          return const SizedBox.shrink();
+        },
+      ),
+    )
+        : const SizedBox.shrink();
   }
 }

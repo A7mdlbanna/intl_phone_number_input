@@ -51,7 +51,7 @@ class PhoneNumber extends Equatable {
 
   @override
   String toString() {
-    return 'PhoneNumber(phoneNumber: $phoneNumber, dialCode: $dialCode, isoCode: $isoCode)';
+    return phoneNumber!;
   }
 
   /// Returns [PhoneNumber] which contains region information about
@@ -89,11 +89,12 @@ class PhoneNumber extends Equatable {
       );
 
       return formattedNumber!.replaceAll(
-        RegExp('^([\\+]?${number.dialCode}[\\s]?)'),
+        number.dialCode!,
         '',
       );
     } else {
-      throw new Exception('ISO Code is "${phoneNumber.isoCode}"');
+      print('ISO Code is "${phoneNumber.isoCode}"');
+      return '';
     }
   }
 

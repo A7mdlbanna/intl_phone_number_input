@@ -13,6 +13,9 @@ dependencies:
   libphonenumber_plugin: ^0.2.5
   equatable: ^2.0.5
   collection: ^1.16.0
+  numbers_formatter:
+    git: https://github.com/A7mdlbanna/numbers_formatter.git
+  flutter_screenutil: ^5.6.1
 
 dev_dependencies:
   flutter_test:

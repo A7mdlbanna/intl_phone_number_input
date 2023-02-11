@@ -39,7 +39,7 @@ class SelectorConfig {
     this.useEmoji = false,
     this.countryComparator,
     this.setSelectorButtonAsPrefixIcon = false,
-    this.leadingPadding,
-    this.trailingSpace = true,
+    this.leadingPadding = 0.0,
+    this.trailingSpace = false,
   });
 }
