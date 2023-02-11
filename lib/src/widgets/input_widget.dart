@@ -419,7 +419,7 @@ class _InputWidgetView
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                   FilteringTextInputFormatter.allow(RegExp('^[1-9][0-9]*\$')),
-                  PhoneFormatter(sample: '000-000-0000', separator: ' '),
+                  NumbersFormatter(sample: '000-000-0000', separator: ' '),
                 ],
                 onChanged: state.onChanged,
               ),
